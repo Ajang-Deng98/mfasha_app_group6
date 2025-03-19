@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "218013895617",
+    "project_id": "mfashaapp-dfd3b",
+    "storage_bucket": "mfashaapp-dfd3b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218013895617:android:851f9922bd38e99d777d40",
+        "android_client_info": {
+          "package_name": "com.example.mfasha_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALZ83KkHnhAuKUohG8IA7dq4BDXZn87D4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
