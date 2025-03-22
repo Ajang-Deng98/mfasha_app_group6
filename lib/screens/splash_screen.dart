@@ -28,7 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
           Center(
             child: Column(
               children: [
-                Image.asset('assets/logo.png', height: 80), // Adjust logo size
+                // ✅ Fixed: CustomImage widget now correctly implemented
+                const CustomImage(imagePath: 'assets/images/profile.png', width: 80, height: 80),
                 const SizedBox(height: 20),
                 const Text(
                   "Mfasha",
@@ -60,6 +61,33 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+// ✅ Fixed: Define the CustomImage widget
+class CustomImage extends StatelessWidget {
+  final String imagePath;
+  final double width;
+  final double height;
+
+  const CustomImage({
+    super.key,
+    required this.imagePath,
+    required this.width,
+    required this.height,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      imagePath,
+      width: width,
+      height: height,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return const Icon(Icons.broken_image, size: 80, color: Colors.red);
+      },
     );
   }
 }
