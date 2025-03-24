@@ -1,0 +1,2 @@
+C:/Users/HP/OneDrive/Documents/mfasha_app_group6/android/app/.cxx/Debug/393l2g18/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/HP/OneDrive/Documents/mfasha_app_group6/android/app/.cxx/Debug/393l2g18/armeabi-v7a/CMakeFiles/rebuild_cache.dir
