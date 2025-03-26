@@ -1,0 +1,2 @@
+C:/Users/HP/mfasha_app_group6/android/app/.cxx/Debug/2v2q2n3e/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/HP/mfasha_app_group6/android/app/.cxx/Debug/2v2q2n3e/x86_64/CMakeFiles/rebuild_cache.dir
