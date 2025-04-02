@@ -33,6 +33,7 @@ class AuthService {
         'username': username,
         'email': email,
         'phoneNumber': phoneNumber,
+        'type' : 'user',
       });
 
       // Navigate to LoginPage after successful signup
