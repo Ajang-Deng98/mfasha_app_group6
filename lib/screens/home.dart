@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// Remove Iconify and use Flutter's built-in icons instead
 import 'chat_page.dart';
 import 'AdminHealthcareScreen.dart';
 import 'emergency_hotlines.dart';
@@ -86,8 +85,9 @@ class _HomeState extends State<Home> {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFF4F5F8),
         elevation: 0,
+        automaticallyImplyLeading: false,
         title: const Text(
           'MFASHA',
           style: TextStyle(
@@ -119,8 +119,8 @@ class _HomeState extends State<Home> {
       ),
       drawer: _isAdmin ? Drawer(
         child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
+          padding: const EdgeInsets.all(16),
+        children: [
             Container(
               height: 80, // Reduced drawer header height
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -148,6 +148,20 @@ class _HomeState extends State<Home> {
             ),
             ListTile(
               title: const Text('Emergency Guides'),
+              onTap: () {
+                // Navigate to emergency guides screen
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Hot Lines'),
+              onTap: () {
+                // Navigate to emergency guides screen
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Crisis Alerts'),
               onTap: () {
                 // Navigate to emergency guides screen
                 Navigator.pop(context);
