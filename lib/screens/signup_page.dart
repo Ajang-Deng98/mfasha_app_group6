@@ -3,7 +3,6 @@ import 'login_page.dart';
 import '../widgets/text_field_widget.dart';
 import '../widgets/logo_widget.dart';
 import '../services/auth-services.dart';
-import '../widgets/text_field_widget.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
