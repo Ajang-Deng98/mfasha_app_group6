@@ -33,14 +33,13 @@ dependencies:
 
   # Firebase
   firebase_core: ^2.24.1
-  firebase_auth: ^4.16.0
+  firebase_auth: ^4.19.1
   cloud_firestore: ^4.15.1
   firebase_storage: ^11.6.1
   firebase_analytics: ^10.7.0
 
   # UI
   cupertino_icons: ^1.0.8
-  fluttertoast: ^8.2.8
   flutter_markdown: ^0.7.2
   iconify_flutter: ^0.0.7
   cached_network_image: ^3.4.0  
@@ -51,6 +50,7 @@ dependencies:
   flutter_dotenv: ^5.1.0
   image_picker: ^1.1.2
   url_launcher: ^6.3.1
+  oktoast: ^3.4.0
 
 dev_dependencies:
   flutter_test:
