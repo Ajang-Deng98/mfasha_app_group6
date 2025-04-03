@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:oktoast/oktoast.dart';
 import '../screens/home.dart';
 import '../screens/login_page.dart';
 
@@ -94,13 +94,12 @@ class AuthService {
   }
 
   void _showToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.SNACKBAR,
+    showToast(
+      message,
+      duration: const Duration(seconds: 3),
+      position: ToastPosition.bottom,
       backgroundColor: Colors.black54,
-      textColor: Colors.white,
-      fontSize: 14.0,
+      textStyle: const TextStyle(color: Colors.white, fontSize: 14.0),
     );
   }
 }
