@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'chat_page.dart';
 import 'AdminHealthcareScreen.dart';
 import 'emergency_hotlines.dart';
-import 'emergency_guides/emergency_guides_screen.dart'; 
+import 'emergency_guides/emergency_guides_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -56,10 +56,10 @@ class _HomeState extends State<Home> {
         }
         break;
       case 1:
-        // Navigate to Hospital screen
+      // Navigate to Hospital screen
         break;
       case 2:
-        // Navigate to Emergency Guides screen
+      // Navigate to Emergency Guides screen
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => EmergencyGuidesScreen()),
@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
         );
         break;
       case 4:
-        // Navigate to Emergency Hotlines
+      // Navigate to Emergency Hotlines
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => EmergencyHotlinesScreen()),
@@ -178,43 +178,92 @@ class _HomeState extends State<Home> {
           ],
         ),
       ) : null,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20)
-          ),
-          const Center(
-            child: Text(
-              'Welcome to Mfasha Health App!',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Health Hub',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ChatPage()),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              backgroundColor: Colors.blue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+              const SizedBox(height: 8),
+              const Text(
+                'Your go-to source for health information',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
               ),
-            ),
-            child: const Text(
-              "Ask AI",
-              style: TextStyle(color: Colors.white, fontSize: 18),
-            ),
+              const SizedBox(height: 24),
+
+              // Quick Access Buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildQuickAccessButton(
+                    icon: Icons.local_hospital,
+                    label: 'Health Facilities',
+                    onTap: () => _onItemTapped(1),
+                  ),
+                  _buildQuickAccessButton(
+                    icon: Icons.medical_services,
+                    label: 'Emergency Guides',
+                    onTap: () => _onItemTapped(2),
+                  ),
+                  _buildQuickAccessButton(
+                    icon: Icons.phone,
+                    label: 'Emergency Contacts',
+                    onTap: () => _onItemTapped(4),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+
+              // Recommended Health Facilities Section
+              const Text(
+                'Recommended Health Facilities',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Features Row
+              Row(
+                children: [
+                  _buildFeatureChip('Open 24/7'),
+                  const SizedBox(width: 8),
+                  _buildFeatureChip('Specialized care'),
+                ],
+              ),
+              const SizedBox(height: 16),
+
+              // Facilities List
+              Column(
+                children: [
+                  _buildHealthFacilityCard(
+                    icon: Icons.local_hospital,
+                    name: 'City Hospital',
+                    rating: 5.0,
+                  ),
+                  const SizedBox(height: 16),
+                  _buildHealthFacilityCard(
+                    icon: Icons.medical_services,
+                    name: 'Wellness Clinic',
+                    rating: 4.5,
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -245,6 +294,68 @@ class _HomeState extends State<Home> {
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
+      ),
+    );
+  }
+
+  Widget _buildQuickAccessButton({required IconData icon, required String label, required VoidCallback onTap}) {
+    return Column(
+      children: [
+        IconButton(
+          icon: Icon(icon, size: 32, color: Colors.blue),
+          onPressed: onTap,
+        ),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 12),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFeatureChip(String text) {
+    return Chip(
+      label: Text(text),
+      backgroundColor: Colors.blue.withOpacity(0.1),
+      labelStyle: const TextStyle(color: Colors.blue),
+    );
+  }
+
+  Widget _buildHealthFacilityCard({required IconData icon, required String name, required double rating}) {
+    return Card(
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Icon(icon, size: 40, color: Colors.blue),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      const Icon(Icons.star, color: Colors.amber, size: 16),
+                      Text(
+                        '$rating-star rating',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
