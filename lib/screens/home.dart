@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'chat_page.dart';
 import 'AdminHealthcareScreen.dart';
 import 'emergency_hotlines.dart';
+import 'emergency_guides/emergency_guides_screen.dart'; 
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -23,7 +24,6 @@ class _HomeState extends State<Home> {
     _checkAdminStatus();
   }
 
-  // Check if current user is an admin
   Future<void> _checkAdminStatus() async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
@@ -46,10 +46,8 @@ class _HomeState extends State<Home> {
       _selectedIndex = index;
     });
 
-    // Navigation based on the selected index
     switch (index) {
       case 0:
-      // Navigate to Home screen - avoid recreation of the same screen
         if (_selectedIndex != 0) {
           Navigator.pushReplacement(
             context,
@@ -58,23 +56,27 @@ class _HomeState extends State<Home> {
         }
         break;
       case 1:
-      // Navigate to Hospital screen
-      // Replace with your hospital screen navigation
+        // Navigate to Hospital screen
         break;
       case 2:
-      // Navigate to Siren screen
-      // Replace with your siren/emergency screen navigation
+        // Navigate to Emergency Guides screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EmergencyGuidesScreen()),
+        );
         break;
       case 3:
-      // Navigate to Chat/Book screen
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ChatPage()),
         );
         break;
       case 4:
-      //navigate to contacts
-      // You can implement a phone call feature or navigate to a call screen
+        // Navigate to Emergency Hotlines
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EmergencyHotlinesScreen()),
+        );
         break;
     }
   }
@@ -120,9 +122,9 @@ class _HomeState extends State<Home> {
       drawer: _isAdmin ? Drawer(
         child: ListView(
           padding: const EdgeInsets.all(16),
-        children: [
+          children: [
             Container(
-              height: 80, // Reduced drawer header height
+              height: 80,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: const BoxDecoration(
                 color: Colors.blue,
@@ -149,21 +151,27 @@ class _HomeState extends State<Home> {
             ListTile(
               title: const Text('Emergency Guides'),
               onTap: () {
-                // Navigate to emergency guides screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EmergencyGuidesScreen()),
+                );
                 Navigator.pop(context);
               },
             ),
             ListTile(
               title: const Text('Hot Lines'),
               onTap: () {
-                // Navigate to emergency guides screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EmergencyHotlinesScreen()),
+                );
                 Navigator.pop(context);
               },
             ),
             ListTile(
               title: const Text('Crisis Alerts'),
               onTap: () {
-                // Navigate to emergency guides screen
+                // Navigate to crisis alerts screen
                 Navigator.pop(context);
               },
             ),
@@ -209,45 +217,25 @@ class _HomeState extends State<Home> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: _selectedIndex == 0 ? Colors.blue : Colors.black,
-              size: 24,
-            ),
+            icon: Icon(Icons.home, size: 24),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.local_hospital,
-              color: _selectedIndex == 1 ? Colors.blue : Colors.black,
-              size: 24,
-            ),
+            icon: Icon(Icons.local_hospital, size: 24),
             label: 'Hospital',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.notifications_active,  // Using notification icon for emergency
-              color: _selectedIndex == 2 ? Colors.blue : Colors.black,
-              size: 24,
-            ),
+            icon: Icon(Icons.notifications_active, size: 24),
             label: 'Emergency',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.chat_bubble_outline,  // Using chat icon instead of book
-              color: _selectedIndex == 3 ? Colors.blue : Colors.black,
-              size: 24,
-            ),
+            icon: Icon(Icons.chat_bubble_outline, size: 24),
             label: 'Chat',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.phone,
-              color: _selectedIndex == 4 ? Colors.blue : Colors.black,
-              size: 24,
-            ),
+            icon: Icon(Icons.phone, size: 24),
             label: 'Call',
           ),
         ],
