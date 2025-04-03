@@ -7,6 +7,7 @@ import 'models/guide_model.dart';
 class EmergencyGuidesScreen extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
