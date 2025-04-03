@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
 
 class EmergencyHotlinesScreen extends StatelessWidget {
   final CollectionReference hotlines =
-      FirebaseFirestore.instance.collection('hotlines');
+  FirebaseFirestore.instance.collection('hotlines');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Emergency Hotlines'),
+        title: const Text('Emergency Hotlines'),
         centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black),
+        titleTextStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -22,19 +31,19 @@ class EmergencyHotlinesScreen extends StatelessWidget {
               "Click on the emergency care you want and you find the location and contact",
               style: TextStyle(
                 color: Colors.grey[700],
-                fontSize: 16,
+                fontSize: 14,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: StreamBuilder(
                 stream: hotlines.snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return Center(child: Text("No hotlines available"));
+                    return const Center(child: Text("No hotlines available"));
                   }
                   return ListView(
                     children: snapshot.data!.docs.map((doc) {
@@ -52,29 +61,6 @@ class EmergencyHotlinesScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 4,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Alerts'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          BottomNavigationBarItem(icon: Icon(Icons.contacts), label: 'Contacts'),
-        ],
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.popUntil(context, (route) => route.isFirst);
-              break;
-            case 4:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EmergencyHotlinesScreen()),
-              );
-              break;
-          }
-        },
       ),
     );
   }
@@ -94,7 +80,8 @@ class HotlineTile extends StatelessWidget {
   final String contact;
   final IconData icon;
 
-  HotlineTile({required this.name, required this.contact, required this.icon});
+  const HotlineTile({required this.name, required this.contact, required this.icon, Key? key})
+      : super(key: key);
 
   void _callNumber(String contact) async {
     final Uri url = Uri.parse('tel:$contact');
@@ -105,23 +92,26 @@ class HotlineTile extends StatelessWidget {
     }
   }
 
-  void _openLocation() {
-    print("Open location for $name");
+  void _copyToClipboard(String contact, BuildContext context) {
+    Clipboard.setData(ClipboardData(text: contact));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Copied to clipboard')),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(color: Colors.grey[300]!),
       ),
       child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Colors.red[50],
             shape: BoxShape.circle,
@@ -130,7 +120,7 @@ class HotlineTile extends StatelessWidget {
         ),
         title: Text(
           name,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         subtitle: Text(
           contact,
@@ -140,11 +130,11 @@ class HotlineTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              icon: Icon(Icons.location_on, color: Colors.blue),
-              onPressed: _openLocation,
+              icon: const Icon(Icons.copy, color: Colors.blue),
+              onPressed: () => _copyToClipboard(contact, context),
             ),
             IconButton(
-              icon: Icon(Icons.call, color: Colors.green),
+              icon: const Icon(Icons.call, color: Colors.green),
               onPressed: () => _callNumber(contact),
             ),
           ],
